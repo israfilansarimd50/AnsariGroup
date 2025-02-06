@@ -9,25 +9,71 @@
         table { width: 80%; margin: auto; border-collapse: collapse; }
         th, td { border: 1px solid black; padding: 10px; text-align: left; }
         th { background-color: #f2f2f2; }
+        button { margin: 5px; padding: 5px 10px; }
     </style>
 </head>
 <body>
+
     <h2>Daily Maintenance Work Log</h2>
-    <table>
+
+    <table id="logTable">
         <tr>
             <th>Date</th>
             <th>Equipment</th>
             <th>Issue</th>
             <th>Action Taken</th>
             <th>Remarks</th>
+            <th>Action</th>
         </tr>
-        <tr>
-            <td>2025-02-06</td>
-            <td>Backup Pump</td>
-            <td>Leak Detected</td>
-            <td>Seal Replaced</td>
-            <td>Needs Monitoring</td>
-        </tr>
+        <!-- Existing log will appear here -->
     </table>
+
+    <h3>Add New Log</h3>
+    <input type="date" id="date">
+    <input type="text" id="equipment" placeholder="Equipment">
+    <input type="text" id="issue" placeholder="Issue">
+    <input type="text" id="action" placeholder="Action Taken">
+    <input type="text" id="remarks" placeholder="Remarks">
+    <button onclick="addLog()">Add Log</button>
+
+    <script>
+        // Function to add new log to the table
+        function addLog() {
+            var date = document.getElementById("date").value;
+            var equipment = document.getElementById("equipment").value;
+            var issue = document.getElementById("issue").value;
+            var action = document.getElementById("action").value;
+            var remarks = document.getElementById("remarks").value;
+
+            if(date && equipment && issue && action && remarks) {
+                var table = document.getElementById("logTable");
+                var newRow = table.insertRow();
+                newRow.innerHTML = `
+                    <td>${date}</td>
+                    <td>${equipment}</td>
+                    <td>${issue}</td>
+                    <td>${action}</td>
+                    <td>${remarks}</td>
+                    <td><button onclick="deleteLog(this)">Delete</button></td>
+                `;
+                
+                // Clear the input fields
+                document.getElementById("date").value = '';
+                document.getElementById("equipment").value = '';
+                document.getElementById("issue").value = '';
+                document.getElementById("action").value = '';
+                document.getElementById("remarks").value = '';
+            } else {
+                alert("Please fill all fields.");
+            }
+        }
+
+        // Function to delete log from the table
+        function deleteLog(button) {
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+
 </body>
 </html>
