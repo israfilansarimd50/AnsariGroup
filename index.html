@@ -37,6 +37,10 @@
     <button onclick="addLog()">Add Log</button>
 
     <script>
+        // Define the creator username and password (can be modified or fetched dynamically if needed)
+        const creatorUsername = "Md Israfil Ansari"; // Change as needed
+        const creatorPassword = "yourPassword123"; // Change as needed
+
         // Function to add new log to the table
         function addLog() {
             var date = document.getElementById("date").value;
@@ -70,8 +74,20 @@
 
         // Function to delete log from the table
         function deleteLog(button) {
-            var row = button.parentNode.parentNode;
-            row.parentNode.removeChild(row);
+            // Prompt for username and password verification
+            var currentUser = prompt("Enter your username to delete this log:");
+            if (currentUser === creatorUsername) {
+                var currentPassword = prompt("Enter your password to confirm deletion:");
+                if (currentPassword === creatorPassword) {
+                    var row = button.parentNode.parentNode;
+                    row.parentNode.removeChild(row);
+                    alert("Log deleted successfully.");
+                } else {
+                    alert("Incorrect password. Deletion failed.");
+                }
+            } else {
+                alert("You are not authorized to delete this log.");
+            }
         }
     </script>
 
